@@ -18,7 +18,7 @@ controller Controller;
 vex::motor LF = motor(PORT12);
 vex::motor RF = motor(PORT11);
 vex::motor LB = motor(PORT14);
-vex::motor RB = motor(PORT13);
+vex::motor RB = motor(PORT20);
 vex::motor IL = motor(PORT10);
 vex::motor IR = motor(PORT19);
 
@@ -251,6 +251,31 @@ void autonomous( void ) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+
+
+void liftUp() {
+  /*
+  if (CubeLift.rotation(rotationUnits::deg) < 1500) {
+    IL.spin(directionType::fwd, -1, voltageUnits::volt);
+    IR.spin(directionType::fwd, 1, voltageUnits::volt);
+    CubeLift.setVelocity(100, percentUnits::pct);
+    CubeLift.spin(directionType::fwd, 12, voltageUnits::volt);
+  } else if (CubeLift.rotation(rotationUnits::deg) < 1600) {
+    IL.spin(directionType::fwd, -1, voltageUnits::volt);
+    IR.spin(directionType::fwd, 1, voltageUnits::volt);
+    CubeLift.setVelocity(80, percentUnits::pct);
+  } else {
+    IL.spin(directionType::fwd, -1, voltageUnits::volt);
+    IR.spin(directionType::fwd, 1, voltageUnits::volt);
+    CubeLift.setVelocity(70, percentUnits::pct);
+  }*/
+  CubeLift.spin(directionType::fwd, 8 + ((1620 - CubeLift.rotation(rotationUnits::deg)) / 15), velocityUnits::pct);
+  //CubeLift.setVelocity((2000 - CubeLift.rotation(rotationUnits::deg)) / 2, percentUnits::pct);
+}
+
+
+
+
 int driveTask() {
   
     while(1) {
@@ -288,14 +313,11 @@ void usercontrol( void ) {
     }
 
     if (Controller.ButtonY.pressing()) {
-      while(Controller.ButtonY.pressing()) {
-        IL.spin(directionType::fwd, -2, voltageUnits::volt);
-        IR.spin(directionType::fwd, 2, voltageUnits::volt);
-        LF.spin(directionType::fwd, -2, voltageUnits::volt);
-        LB.spin(directionType::fwd, -2, voltageUnits::volt);
-        RF.spin(directionType::fwd, 2, voltageUnits::volt);
-        RB.spin(directionType::fwd, 2, voltageUnits::volt);
+      while(Controller.ButtonY.pressing()) {}
+      while(CubeLift.rotation(rotationUnits::deg) < 1600) {
+        liftUp();
       }
+      CubeLift.stop(brakeType::hold);
     }
 
 
@@ -339,20 +361,7 @@ void usercontrol( void ) {
     if (Controller.ButtonL1.pressing()) { 
       CubeLift.spin(directionType::fwd, -9, voltageUnits::volt);
     } else if (Controller.ButtonL2.pressing()) {
-      if (CubeLift.rotation(rotationUnits::deg) < 300) {
-        IL.spin(directionType::fwd, -1, voltageUnits::volt);
-        IR.spin(directionType::fwd, 1, voltageUnits::volt);
-        CubeLift.spin(directionType::fwd, 12, voltageUnits::volt);
-      } else if (CubeLift.rotation(rotationUnits::deg) < 500) {
-        IL.spin(directionType::fwd, -1, voltageUnits::volt);
-        IR.spin(directionType::fwd, 1, voltageUnits::volt);
-        CubeLift.spin(directionType::fwd, 9, voltageUnits::volt);
-      } else {
-        IL.spin(directionType::fwd, -1, voltageUnits::volt);
-        IR.spin(directionType::fwd, 1, voltageUnits::volt);
-        CubeLift.spin(directionType::fwd, 6, voltageUnits::volt);
-      }
-      
+      liftUp();
     } else {
       CubeLift.stop(brakeType::hold);
     }
