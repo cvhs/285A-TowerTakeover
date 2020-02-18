@@ -270,6 +270,29 @@ int driveTask() {
 }
 
 
+void liftUp( void ) {
+  if (CubeLift.rotation(rotationUnits::deg) < 900) {
+    IL.spin(directionType::fwd, -1, voltageUnits::volt);
+    IR.spin(directionType::fwd, 1, voltageUnits::volt);
+    CubeLift.spin(directionType::fwd, 12, voltageUnits::volt);
+  } else if (CubeLift.rotation(rotationUnits::deg) < 1200) {
+    IL.spin(directionType::fwd, -1, voltageUnits::volt);
+    IR.spin(directionType::fwd, 1, voltageUnits::volt);
+    CubeLift.spin(directionType::fwd, 6, voltageUnits::volt);
+  } else {
+    IL.spin(directionType::fwd, -1, voltageUnits::volt);
+    IR.spin(directionType::fwd, 1, voltageUnits::volt);
+    CubeLift.spin(directionType::fwd, 2, voltageUnits::volt);
+  }
+}
+
+void liftDown( void ) {
+  CubeLift.setVelocity(100, percentUnits::pct);
+  IntakeLift.setVelocity(100, percentUnits::pct);
+  IntakeLift.rotateTo(0, rotationUnits::deg);
+  CubeLift.rotateTo(0, rotationUnits::deg);
+}
+
 void usercontrol( void ) {
 
   vex::task d( driveTask );
@@ -288,14 +311,11 @@ void usercontrol( void ) {
     }
 
     if (Controller.ButtonY.pressing()) {
-      while(Controller.ButtonY.pressing()) {
-        IL.spin(directionType::fwd, -2, voltageUnits::volt);
-        IR.spin(directionType::fwd, 2, voltageUnits::volt);
-        LF.spin(directionType::fwd, -2, voltageUnits::volt);
-        LB.spin(directionType::fwd, -2, voltageUnits::volt);
-        RF.spin(directionType::fwd, 2, voltageUnits::volt);
-        RB.spin(directionType::fwd, 2, voltageUnits::volt);
+      while(Controller.ButtonY.pressing()) {}
+      while(CubeLift.rotation(rotationUnits::deg) < 1320) {
+        liftUp();
       }
+      CubeLift.stop(brakeType::hold);
     }
 
 
@@ -321,10 +341,7 @@ void usercontrol( void ) {
 
     if (Controller.ButtonB.pressing()) {
       while(Controller.ButtonB.pressing()) {}
-      CubeLift.setVelocity(100, percentUnits::pct);
-      IntakeLift.setVelocity(100, percentUnits::pct);
-      IntakeLift.rotateTo(0, rotationUnits::deg);
-      CubeLift.rotateTo(0, rotationUnits::deg);
+      liftDown();
     }
 
     if (Controller.ButtonUp.pressing()) {
@@ -339,20 +356,7 @@ void usercontrol( void ) {
     if (Controller.ButtonL1.pressing()) { 
       CubeLift.spin(directionType::fwd, -9, voltageUnits::volt);
     } else if (Controller.ButtonL2.pressing()) {
-      if (CubeLift.rotation(rotationUnits::deg) < 300) {
-        IL.spin(directionType::fwd, -1, voltageUnits::volt);
-        IR.spin(directionType::fwd, 1, voltageUnits::volt);
-        CubeLift.spin(directionType::fwd, 12, voltageUnits::volt);
-      } else if (CubeLift.rotation(rotationUnits::deg) < 500) {
-        IL.spin(directionType::fwd, -1, voltageUnits::volt);
-        IR.spin(directionType::fwd, 1, voltageUnits::volt);
-        CubeLift.spin(directionType::fwd, 9, voltageUnits::volt);
-      } else {
-        IL.spin(directionType::fwd, -1, voltageUnits::volt);
-        IR.spin(directionType::fwd, 1, voltageUnits::volt);
-        CubeLift.spin(directionType::fwd, 6, voltageUnits::volt);
-      }
-      
+      liftUp();
     } else {
       CubeLift.stop(brakeType::hold);
     }
