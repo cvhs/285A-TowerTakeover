@@ -322,8 +322,8 @@ void usercontrol( void ) {
      while(Controller.ButtonX.pressing()) {}
      CubeLift.setVelocity(100, percentUnits::pct);
      IntakeLift.setVelocity(100, percentUnits::pct);
-     IntakeLift.rotateTo(-300, rotationUnits::deg);
-     CubeLift.rotateTo(500, rotationUnits::deg);
+     CubeLift.setStopping(brakeType::coast);
+     CubeLift.startRotateTo(300, rotationUnits::deg);
      IntakeLift.rotateTo(-1200, rotationUnits::deg);
    }
  
@@ -331,8 +331,8 @@ void usercontrol( void ) {
      while(Controller.ButtonA.pressing()) {}
      CubeLift.setVelocity(100, percentUnits::pct);
      IntakeLift.setVelocity(100, percentUnits::pct);
+     CubeLift.startRotateTo(300, rotationUnits::deg);
      IntakeLift.rotateTo(-300, rotationUnits::deg);
-     CubeLift.rotateTo(500, rotationUnits::deg);
      IntakeLift.rotateTo(-890, rotationUnits::deg);
    }
  
@@ -340,8 +340,8 @@ void usercontrol( void ) {
      while(Controller.ButtonB.pressing()) {}
      CubeLift.setVelocity(100, percentUnits::pct);
      IntakeLift.setVelocity(100, percentUnits::pct);
-     IntakeLift.rotateTo(0, rotationUnits::deg);
      CubeLift.rotateTo(0, rotationUnits::deg);
+     IntakeLift.rotateTo(0, rotationUnits::deg);
    }
  
    if (Controller.ButtonUp.pressing()) {
