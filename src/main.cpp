@@ -1,193 +1,31 @@
 #include "vex.h"
+#include "assistants/assistants.h"
+#include "autons/autons.h"
 using namespace vex;
 competition Competition;
  
 void pre_auton( void ) { }
-
-void liftUp() {
-  CubeLift.spin(directionType::fwd, 14 + ((1620 - CubeLift.rotation(rotationUnits::deg)) / 15), velocityUnits::pct);
-}
-void deploy() {vex::competition Competition;
-  IntakeLift.setVelocity(100, percentUnits::pct);
-  IntakeLift.rotateTo(-900, rotationUnits::deg);
-  IntakeLift.rotateTo(0, rotationUnits::deg); 
-}
- 
-void setIntakePct(double v) {
-  IL.spin(directionType::fwd, (v/100)*12, voltageUnits::volt);
-  IR.spin(directionType::fwd, (v/100)*-12, voltageUnits::volt);
-}
- 
-void intakeMove(double deg) {
-  IL.startRotateFor(directionType::fwd, deg, rotationUnits::deg, 100, velocityUnits::pct);
-  IR.startRotateFor(directionType::fwd, -deg, rotationUnits::deg, 100, velocityUnits::pct);
-}
- 
- 
-void setVel(double v) {
-  LF.setVelocity(v, percentUnits::pct);
-  RF.setVelocity(v, percentUnits::pct);
-  LB.setVelocity(v, percentUnits::pct);
-  RB.setVelocity(v, percentUnits::pct);
-}
- 
-void setStopping(vex::brakeType stop) {
-  LF.setStopping(stop);
-  RF.setStopping(stop);
-  LB.setStopping(stop);
-  RB.setStopping(stop);
-}
- 
-void moveForward(double deg, double vel) {
-  setVel(vel);
-  LF.startRotateFor(deg, rotationUnits::deg);
-  RF.startRotateFor(-deg, rotationUnits::deg);
-  LB.startRotateFor(deg, rotationUnits::deg);
-  RB.startRotateFor(-deg, rotationUnits::deg);
-  while(!LF.isDone()){}
-  while(!RF.isDone()){}
-  while(!LB.isDone()){}
-  while(!RB.isDone()){}
-}
- 
-void turnClockwise(double deg, double vel) {
-  setVel(vel);
-  LF.startRotateFor(deg, rotationUnits::deg);
-  RF.startRotateFor(deg, rotationUnits::deg);
-  LB.startRotateFor(deg, rotationUnits::deg);
-  RB.startRotateFor(deg, rotationUnits::deg);
-  while(!LF.isDone()){}
-  while(!RF.isDone()){}
-  while(!LB.isDone()){}
-  while(!RB.isDone()){}
-}
- 
-void liftCubes() {
-  while (CubeLift.rotation(rotationUnits::deg) < 1600) {;
-    liftUp();
-  }
-  CubeLift.stop();
-}
- 
- 
-void backOut() {
-  IL.spin(directionType::fwd, -9, voltageUnits::volt);
-  IR.spin(directionType::fwd, 9, voltageUnits::volt);
-  LF.spin(directionType::fwd, -3, voltageUnits::volt);
-  LB.spin(directionType::fwd, -3, voltageUnits::volt);
-  RF.spin(directionType::fwd, 3, voltageUnits::volt);
-  RB.spin(directionType::fwd, 3, voltageUnits::volt);
-}
-void basicDriveBackForth() {
-  LF.spin(directionType::fwd, -70, percentUnits::pct);
-  LB.spin(directionType::fwd, -70, percentUnits::pct);
-  RF.spin(directionType::fwd, 70, percentUnits::pct);
-  RB.spin(directionType::fwd, 70, percentUnits::pct);
-  vex::task::sleep(2000);
-  LF.spin(directionType::fwd, 70, percentUnits::pct);
-  LB.spin(directionType::fwd, 70, percentUnits::pct);
-  RF.spin(directionType::fwd, -70, percentUnits::pct);
-  RB.spin(directionType::fwd, -70, percentUnits::pct);
-  vex::task::sleep(1000);
-  LF.spin(directionType::fwd, 0, percentUnits::pct);
-  LB.spin(directionType::fwd, 0, percentUnits::pct);
-  RF.spin(directionType::fwd, 0, percentUnits::pct);
-  RB.spin(directionType::fwd, 0, percentUnits::pct);
-}
- 
- 
-void blueLeft() {
-  setIntakePct(100);
-  vex::task::sleep(200);
-  moveForward(1200, 31);
-  turnClockwise(100, 30);
-  moveForward(230, 20);
-  vex::task::sleep(100);
-  turnClockwise(-470, 30);
-  vex::task::sleep(100);
-  setIntakePct(0);
-  moveForward(950, 80);
-  intakeMove(-600);
-  vex::task::sleep(700);
-  liftCubes();
-  moveForward(40, 20);
-  vex::task::sleep(200);
-  backOut();
-  vex::task::sleep(500);
-}
- 
-void redRight() {
-  setIntakePct(100);
-  vex::task::sleep(200);
-  moveForward(1200, 23);
-  vex::task::sleep(100);
-  turnClockwise(390, 30);
-  vex::task::sleep(100);
-  setIntakePct(0);
-  moveForward(880, 50);
-  intakeMove(-600);
-  vex::task::sleep(700);
-  liftCubes();
-  moveForward(40, 20);
-  vex::task::sleep(200);
-  backOut();
-  vex::task::sleep(500);
-}
- 
-void blueRight() {
-  moveForward(-1200, 23);
-  moveForward(1200, 23);
-}
- 
-void nextStep() {
-}
  
 void autonomous( void ) {
- // ..........................................................................
- // Insert autonomous user code here.
- // ..........................................................................
-  vex::task::sleep(200);
- double val = Selector.value(percentUnits::pct);
- double sectorSpan = 100 / 4;
- deploy();
- if (val <= sectorSpan) {
-   redRight();
- } else if (val <= 2*sectorSpan) {
-   blueLeft();
- } else if (val <= 3*sectorSpan) {
-   blueLeft();
- } else if  (val <= 4*sectorSpan) {
-   blueRight();
- }
- 
+  executeAuton();
 }
- 
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              User Control Task                            */
-/*                                                                           */
-/*  This task is used to control your robot during the user control phase of */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
  
  
  
  
 int driveTask() {
-    while(1) {
-     double vLEFT_VERTICAL = (double)Controller1.Axis3.value() * 12 / 127;
-     double vRIGHT_VERTICAL = (double)Controller1.Axis2.value() * 12 / 127;
-     double vRIGHT_HORIZONTAL = (double)Controller1.Axis1.value() * 12 / 127;
-     double vLEFT_HORIZONTAL = (double)Controller1.Axis4.value() * 12 / 127;
- 
-     LF.spin(directionType::fwd, vLEFT_VERTICAL, voltageUnits::volt);
-     LB.spin(directionType::fwd, vLEFT_VERTICAL, voltageUnits::volt);
-     RF.spin(directionType::fwd, -vRIGHT_VERTICAL, voltageUnits::volt);
-     RB.spin(directionType::fwd, -vRIGHT_VERTICAL, voltageUnits::volt);
-     vex::task::sleep( 20 );
-   }
+  while(1) {
+    double vLEFT_VERTICAL = (double)Controller1.Axis3.value() * 12 / 127;
+    double vRIGHT_VERTICAL = (double)Controller1.Axis2.value() * 12 / 127;
+    double vRIGHT_HORIZONTAL = (double)Controller1.Axis1.value() * 12 / 127;
+    double vLEFT_HORIZONTAL = (double)Controller1.Axis4.value() * 12 / 127;
+
+    LF.spin(directionType::fwd, vLEFT_VERTICAL, voltageUnits::volt);
+    LB.spin(directionType::fwd, vLEFT_VERTICAL, voltageUnits::volt);
+    RF.spin(directionType::fwd, -vRIGHT_VERTICAL, voltageUnits::volt);
+    RB.spin(directionType::fwd, -vRIGHT_VERTICAL, voltageUnits::volt);
+    vex::task::sleep( 20 );
+    }
     return(0);
 }
  
