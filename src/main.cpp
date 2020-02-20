@@ -65,6 +65,7 @@ void usercontrol( void ) {
       IntakeLift.rotateTo(-300, rotationUnits::deg);
       CubeLift.rotateTo(400, rotationUnits::deg);
       IntakeLift.rotateTo(-1200, rotationUnits::deg);
+      CubeLift.rotateTo(600, rotationUnits::deg);
    }
  
    if (Controller1.ButtonA.pressing()) {
@@ -80,7 +81,7 @@ void usercontrol( void ) {
      while(Controller1.ButtonB.pressing()) {}
      CubeLift.setVelocity(100, percentUnits::pct);
      IntakeLift.setVelocity(100, percentUnits::pct);
-     CubeLift.rotateTo(0, rotationUnits::deg);
+     CubeLift.startRotateTo(0, rotationUnits::deg);
      IntakeLift.rotateTo(0, rotationUnits::deg);
    }
  
