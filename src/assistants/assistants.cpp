@@ -72,10 +72,10 @@ void liftCubes() {
 void backOut() {
   IL.spin(directionType::fwd, -9, voltageUnits::volt);
   IR.spin(directionType::fwd, 9, voltageUnits::volt);
-  LF.spin(directionType::fwd, -3, voltageUnits::volt);
-  LB.spin(directionType::fwd, -3, voltageUnits::volt);
-  RF.spin(directionType::fwd, 3, voltageUnits::volt);
-  RB.spin(directionType::fwd, 3, voltageUnits::volt);
+  LF.spin(directionType::fwd, -9, voltageUnits::volt);
+  LB.spin(directionType::fwd, -9, voltageUnits::volt);
+  RF.spin(directionType::fwd, 9, voltageUnits::volt);
+  RB.spin(directionType::fwd, 9, voltageUnits::volt);
 }
 void basicDriveBackForth() {
   LF.spin(directionType::fwd, -70, percentUnits::pct);

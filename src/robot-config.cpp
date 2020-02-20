@@ -8,17 +8,17 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
-motor LF = motor(PORT12, ratio18_1, false);
-motor RF = motor(PORT11, ratio18_1, false);
-motor LB = motor(PORT14, ratio18_1, false);
-motor RB = motor(PORT20, ratio18_1, false);
-motor IL = motor(PORT10, ratio18_1, false);
-motor IR = motor(PORT19, ratio18_1, false);
-motor IntakeLift = motor(PORT8, ratio18_1, false);
-motor CubeLift = motor(PORT15, ratio18_1, false);
+motor LF = motor(PORT2, ratio18_1, false);
+motor RF = motor(PORT1, ratio18_1, false);
+motor LB = motor(PORT3, ratio18_1, false);
+motor RB = motor(PORT4, ratio18_1, false);
+motor IL = motor(PORT12, ratio18_1, false);
+motor IR = motor(PORT11, ratio18_1, false);
+motor IntakeLift = motor(PORT6, ratio18_1, false);
+motor CubeLift = motor(PORT10, ratio18_1, false);
 controller Controller1 = controller(primary);
 pot Selector = pot(Brain.ThreeWirePort.A);
-inertial IMU = inertial(PORT1);
+inertial IMU = inertial(PORT8);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
