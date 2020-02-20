@@ -11,7 +11,7 @@ void redRight() {
   vex::task::sleep(100);
   setIntakePct(0);
   moveForward(880, 50);
-  intakeMove(-600);
+  intakeMove(-500);
   vex::task::sleep(700);
   liftCubes();
   moveForward(40, 20);
