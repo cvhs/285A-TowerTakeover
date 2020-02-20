@@ -8,4 +8,7 @@ void redRight();
 void blueRight();
 void redLeft();
 
+void blue5cube();
+void blue6cube();
+
 #endif

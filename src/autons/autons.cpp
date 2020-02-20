@@ -4,10 +4,9 @@
 using namespace vex;
 
 void executeAuton() {
-  vex::task::sleep(200);
+  deploy();
   double val = Selector.value(percentUnits::pct);
   double sectorSpan = 100 / 4;
-  deploy();
   if (val <= sectorSpan) {
     redRight();
   } else if (val <= 2*sectorSpan) {
