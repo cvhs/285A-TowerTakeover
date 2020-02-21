@@ -32,7 +32,21 @@ void intakeMove(double deg) {
   IL.startRotateFor(directionType::fwd, deg, rotationUnits::deg, 100, velocityUnits::pct);
   IR.startRotateFor(directionType::fwd, -deg, rotationUnits::deg, 100, velocityUnits::pct);
 }
+
+double getLeftVel() {
+  double speed = (LF.velocity(percentUnits::pct) + LB.velocity(percentUnits::pct)) / 2;
+  return speed;
+}
  
+double getRightVel() {
+  double speed = (RF.velocity(percentUnits::pct) + RB.velocity(percentUnits::pct)) / 2;
+  return -speed;
+}
+
+double getClockwiseTurnVel() {
+  return (getLeftVel() - getRightVel()) / 2;
+}
+
 void setLeftVel(double v) {
   LF.spin(directionType::fwd, v, percentUnits::pct);
   LB.spin(directionType::fwd, v, percentUnits::pct);
@@ -92,9 +106,9 @@ void turnClockwiseIMU(double deg) {
     double error = target - IMU.yaw();
 
     double P = 0.9 * error;
-    double D = 0.3 * IMU.gyroRate(axisType::zaxis, velocityUnits::dps);
+    double D = 0.4 * getClockwiseTurnVel();
     
-    double total = P + D;
+    double total = P - D;
     setLeftVel(total);
     setRightVel(-total);
 
