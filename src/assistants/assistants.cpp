@@ -120,7 +120,7 @@ void turnIMUAbsolute(double deg) {
     }
 
     double P = 0.9 * error;
-    double D = 1.1 * getClockwiseTurnVel();
+    double D = 0.35 * IMU.gyroRate(axisType::zaxis, velocityUnits::dps);
     
     double total = P - D;
     setLeftVel(total);
@@ -130,11 +130,11 @@ void turnIMUAbsolute(double deg) {
 
     if ((fabs(D) < maxSettleSpeed) && (fabs(error) < maxSettleError)) {
       holdExit = false;
-      stopAllMotors();
     }
 
     wait(20, timeUnits::msec);
   }
+  stopAllMotors();
 }
  
 void liftCubes() {
