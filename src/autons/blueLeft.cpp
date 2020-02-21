@@ -27,18 +27,19 @@ void blue5Cube() {
 void blue6cube() {
   setIntakePct(100);
   moveForward(1200, 31);
-  turnClockwise(90, 30);
-  moveForward(250, 20);
   vex::task::sleep(400);
-  turnClockwise(-439, 30);
-  vex::task::sleep(100);
-  setIntakePct(0);
-  moveForward(1050, 90);
-  intakeMove(-600);
-  vex::task::sleep(700);
-  liftCubes();
-  moveForward(80, 30);
+  moveForward(-90, 30);
+  turnClockwise(70, 30);
+  moveForward(250, 20);
   vex::task::sleep(200);
+  turnClockwise(-422, 20);
+  setIntakePct(0);
+  vex::task::sleep(300);
+  moveForward(950, 80);
+  intakeMove(-600);
+  vex::task::sleep(300);
+  liftCubes();
+  moveForward(50, 20);
   backOut();
   vex::task::sleep(500);
 }

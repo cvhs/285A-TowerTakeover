@@ -4,7 +4,7 @@ using namespace vex;
 
 
 void liftUp() {
-  CubeLift.spin(directionType::fwd, 14 + ((1620 - CubeLift.rotation(rotationUnits::deg)) / 15), velocityUnits::pct);
+  CubeLift.spin(directionType::fwd, 14 + ((1640 - CubeLift.rotation(rotationUnits::deg)) / 15), velocityUnits::pct);
 }
 void deploy() {
   IntakeLift.setVelocity(100, percentUnits::pct);
@@ -62,7 +62,7 @@ void turnClockwise(double deg, double vel) {
 }
  
 void liftCubes() {
-  while (CubeLift.rotation(rotationUnits::deg) < 1600) {;
+  while (CubeLift.rotation(rotationUnits::deg) < 1620) {;
     liftUp();
   }
   CubeLift.stop();
@@ -72,10 +72,10 @@ void liftCubes() {
 void backOut() {
   IL.spin(directionType::fwd, -9, voltageUnits::volt);
   IR.spin(directionType::fwd, 9, voltageUnits::volt);
-  LF.spin(directionType::fwd, -9, voltageUnits::volt);
-  LB.spin(directionType::fwd, -9, voltageUnits::volt);
-  RF.spin(directionType::fwd, 9, voltageUnits::volt);
-  RB.spin(directionType::fwd, 9, voltageUnits::volt);
+  LF.spin(directionType::fwd, -12, voltageUnits::volt);
+  LB.spin(directionType::fwd, -12, voltageUnits::volt);
+  RF.spin(directionType::fwd, 12, voltageUnits::volt);
+  RB.spin(directionType::fwd, 12, voltageUnits::volt);
 }
 void basicDriveBackForth() {
   LF.spin(directionType::fwd, -70, percentUnits::pct);

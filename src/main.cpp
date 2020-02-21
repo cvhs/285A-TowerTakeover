@@ -54,6 +54,11 @@ void usercontrol( void ) {
      }
      CubeLift.stop(brakeType::hold);
    }
+
+   if (Controller1.ButtonLeft.pressing()) {
+     while(Controller1.ButtonLeft.pressing()) {}
+     deploy();
+   }
  
  
    // Macro To Intake  1048 784
@@ -96,9 +101,12 @@ void usercontrol( void ) {
   
    if (Controller1.ButtonL1.pressing()) {
      CubeLift.spin(directionType::fwd, -9, voltageUnits::volt);
+     while(Controller1.ButtonL1.pressing()) {}
+     CubeLift.stop(brakeType::hold);
    } else if (Controller1.ButtonL2.pressing()) {
-     liftUp();
-   } else {
+     while(Controller1.ButtonL1.pressing()) {
+       liftUp();
+     }
      CubeLift.stop(brakeType::hold);
    }
   
