@@ -95,15 +95,29 @@ void turnClockwise(double deg, double vel) {
   while(!RB.isDone()){}
 }
 
-void turnClockwiseIMU(double deg) {
+void turnIMU(double deg) {
+  turnIMUAbsolute(deg + IMU.heading());
+}
+
+void turnIMUAbsolute(double deg) {
   double maxSettleSpeed = 5;
   double maxSettleError = 1;
 
-  double target = IMU.yaw() + deg;
+  double target = deg;
+  while(target < 0) {
+    target += 360;
+  }
 
   bool holdExit = true;
   while(holdExit) {
-    double error = target - IMU.yaw();
+    double error = target - IMU.heading();
+
+    if (error > 180) {
+      error = target - IMU.heading() - 360;
+    }
+    if (error < -180) {
+      error = target - IMU.heading() + 360;
+    }
 
     double P = 0.9 * error;
     double D = 0.4 * getClockwiseTurnVel();

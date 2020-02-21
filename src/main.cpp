@@ -64,7 +64,7 @@ void usercontrol( void ) {
    }
 
    if (Controller1.ButtonRight.pressing()) {
-     turnClockwiseIMU(90, 100);
+     turnIMU(90);
    }
  
  

@@ -22,7 +22,9 @@ void moveForward(double deg, double vel);
  
 void turnClockwise(double deg, double vel);
 
-void turnClockwiseIMU(double deg);
+void turnIMU(double deg);
+
+void turnIMUAbsolute(double deg);
  
 void liftCubes();
  
