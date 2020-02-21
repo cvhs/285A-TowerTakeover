@@ -32,4 +32,6 @@ void basicDriveBackForth();
 
 void stopAllMotors();
 
+void calibrateGyro();
+
 #endif

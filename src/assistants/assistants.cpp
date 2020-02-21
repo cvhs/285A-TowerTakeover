@@ -142,3 +142,11 @@ void basicDriveBackForth() {
   RF.spin(directionType::fwd, 0, percentUnits::pct);
   RB.spin(directionType::fwd, 0, percentUnits::pct);
 }
+
+void calibrateGyro() {
+  IMU.calibrate();
+  while(IMU.isCalibrating()) {
+    wait(10, timeUnits::sec);
+    Controller1.Screen.print("IMU DONE");
+  }
+}

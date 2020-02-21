@@ -5,12 +5,7 @@ using namespace vex;
 competition Competition;
  
 void pre_auton( void ) {
-  IMU.calibrate();
-  while(IMU.isCalibrating()) {
-    wait(10, timeUnits::sec);
-    Controller1.Screen.print("IMU DONE");
-  }
-
+  calibrateGyro();
 }
  
 void autonomous( void ) {
