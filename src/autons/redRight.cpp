@@ -3,6 +3,10 @@
 #include "../assistants/assistants.h"
 
 void redRight() {
+  red5cube();
+}
+
+void red5cube() {
   setIntakePct(100);
   vex::task::sleep(200);
   moveForward(1200, 23);
@@ -18,4 +22,8 @@ void redRight() {
   vex::task::sleep(200);
   backOut();
   vex::task::sleep(500);
+}
+
+void red6cube() {
+
 }

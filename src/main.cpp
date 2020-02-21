@@ -139,17 +139,23 @@ int main() {
    while(1) {
      vex::task::sleep(100);//Sleep the task for a short amount of time to prevent wasted resources.
      double val = Selector.value(percentUnits::pct);
-     double sectorSpan = 100 / 4;
+     double sectorSpan = 100 / numAutos;
      Controller1.Screen.newLine();
-    //  if (val <= sectorSpan) {
-    //    Controller1.Screen.print("Red 5 cube EPIC");
-    //  } else if (val <= 2*sectorSpan) {
-    //    Controller1.Screen.print("Blue 5 cube EPIC");
-    //  } else if (val <= 3*sectorSpan) {
-    //    Controller1.Screen.print("Red Lame");
-    //  } else if  (val <= 4*sectorSpan) {
-    //    Controller1.Screen.print("Blue Lame");
-    //  }
+     if (val <= sectorSpan) {
+       Controller1.Screen.print("Skills");
+     } else if (val <= 2*sectorSpan) {
+       Controller1.Screen.print("Blue Right (BIG GOAL)");
+     } else if (val <= 3*sectorSpan) {
+       Controller1.Screen.print("Blue 5 Cube");
+     } else if  (val <= 4*sectorSpan) {
+       Controller1.Screen.print("Blue 6 Cube");
+     } else if  (val <= 5*sectorSpan) {
+       Controller1.Screen.print("Red Left (BIG GOAL)");
+     } else if  (val <= 6*sectorSpan) {
+       Controller1.Screen.print("Red 5 Cube");
+     } else if  (val <= 7*sectorSpan) {
+       Controller1.Screen.print("Red 6 Cube");
+     }
    }   
      
 }
