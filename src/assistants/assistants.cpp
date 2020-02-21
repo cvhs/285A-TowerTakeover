@@ -13,10 +13,10 @@ void deploy() {
 }
 
 void stopAllMotors() {
-  LF.setStopping(brakeType::hold);
-  RF.setStopping(brakeType::hold);
-  LB.setStopping(brakeType::hold);
-  RB.setStopping(brakeType::hold);
+  LF.setStopping(brakeType::brake);
+  RF.setStopping(brakeType::brake);
+  LB.setStopping(brakeType::brake);
+  RB.setStopping(brakeType::brake);
   LF.stop();
   RF.stop();
   LB.stop();
@@ -34,13 +34,13 @@ void intakeMove(double deg) {
 }
  
 void setLeftVel(double v) {
-  LF.spin(directionType::fwd, (v/100)*12, voltageUnits::volt);
-  LB.spin(directionType::fwd, (v/100)*12, voltageUnits::volt);
+  LF.spin(directionType::fwd, v, percentUnits::pct);
+  LB.spin(directionType::fwd, v, percentUnits::pct);
 }
 
 void setRightVel(double v) {
-  RF.spin(directionType::fwd, (-v/100)*12, voltageUnits::volt);
-  RB.spin(directionType::fwd, (-v/100)*12, voltageUnits::volt);
+  RF.spin(directionType::fwd, -v, percentUnits::pct);
+  RB.spin(directionType::fwd, -v, percentUnits::pct);
 }
  
 void setVel(double v) {
@@ -81,27 +81,24 @@ void turnClockwise(double deg, double vel) {
   while(!RB.isDone()){}
 }
 
-void turnClockwiseIMU(double deg, double vel) {
-  double target = IMU.yaw() + deg;
-  double totalError = 0;
-  
-  bool holdExit = true;
+void turnClockwiseIMU(double deg) {
+  double maxSettleSpeed = 5;
+  double maxSettleError = 1;
 
+  double target = IMU.yaw() + deg;
+
+  bool holdExit = true;
   while(holdExit) {
     double error = target - IMU.yaw();
-    if (abs(error) < 10) {
-      totalError += error;
-    }
 
-    double P = 0.8 * error;
-    double I = 0.15 * totalError;
-    double D = 1 * IMU.gyroRate(axisType::zaxis, velocityUnits::dps);
+    double P = 0.9 * error;
+    double D = 0.3 * IMU.gyroRate(axisType::zaxis, velocityUnits::dps);
     
-    double total = P + I;
+    double total = P + D;
     setLeftVel(total);
     setRightVel(-total);
 
-    if ((abs(D) < 5) && (abs(error) < 2)) {
+    if ((fabs(D) < maxSettleSpeed) && (fabs(error) < maxSettleError)) {
       holdExit = false;
       stopAllMotors();
     }
