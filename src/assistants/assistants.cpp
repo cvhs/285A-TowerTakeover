@@ -11,6 +11,17 @@ void deploy() {
   IntakeLift.rotateTo(-900, rotationUnits::deg);
   IntakeLift.rotateTo(0, rotationUnits::deg); 
 }
+
+void stopAllMotors() {
+  LF.setStopping(brakeType::hold);
+  RF.setStopping(brakeType::hold);
+  LB.setStopping(brakeType::hold);
+  RB.setStopping(brakeType::hold);
+  LF.stop();
+  RF.stop();
+  LB.stop();
+  RB.stop();
+}
  
 void setIntakePct(double v) {
   IL.spin(directionType::fwd, (v/100)*12, voltageUnits::volt);
@@ -22,6 +33,15 @@ void intakeMove(double deg) {
   IR.startRotateFor(directionType::fwd, -deg, rotationUnits::deg, 100, velocityUnits::pct);
 }
  
+void setLeftVel(double v) {
+  LF.spin(directionType::fwd, (v/100)*12, voltageUnits::volt);
+  LB.spin(directionType::fwd, (v/100)*12, voltageUnits::volt);
+}
+
+void setRightVel(double v) {
+  RF.spin(directionType::fwd, (-v/100)*12, voltageUnits::volt);
+  RB.spin(directionType::fwd, (-v/100)*12, voltageUnits::volt);
+}
  
 void setVel(double v) {
   LF.setVelocity(v, percentUnits::pct);
@@ -59,6 +79,35 @@ void turnClockwise(double deg, double vel) {
   while(!RF.isDone()){}
   while(!LB.isDone()){}
   while(!RB.isDone()){}
+}
+
+void turnClockwiseIMU(double deg, double vel) {
+  double target = IMU.yaw() + deg;
+  double totalError = 0;
+  
+  bool holdExit = true;
+
+  while(holdExit) {
+    double error = target - IMU.yaw();
+    if (abs(error) < 10) {
+      totalError += error;
+    }
+
+    double P = 0.8 * error;
+    double I = 0.15 * totalError;
+    double D = 1 * IMU.gyroRate(axisType::zaxis, velocityUnits::dps);
+    
+    double total = P + I;
+    setLeftVel(total);
+    setRightVel(-total);
+
+    if ((abs(D) < 5) && (abs(error) < 2)) {
+      holdExit = false;
+      stopAllMotors();
+    }
+
+    wait(20, timeUnits::msec);
+  }
 }
  
 void liftCubes() {

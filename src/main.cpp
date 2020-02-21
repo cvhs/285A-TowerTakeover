@@ -4,13 +4,18 @@
 using namespace vex;
 competition Competition;
  
-void pre_auton( void ) { }
+void pre_auton( void ) {
+  IMU.calibrate();
+  while(IMU.isCalibrating()) {
+    wait(10, timeUnits::sec);
+    Controller1.Screen.print("IMU DONE");
+  }
+
+}
  
 void autonomous( void ) {
   executeAuton();
 }
- 
- 
  
  
 int driveTask() {
@@ -24,9 +29,12 @@ int driveTask() {
     LB.spin(directionType::fwd, vLEFT_VERTICAL, voltageUnits::volt);
     RF.spin(directionType::fwd, -vRIGHT_VERTICAL, voltageUnits::volt);
     RB.spin(directionType::fwd, -vRIGHT_VERTICAL, voltageUnits::volt);
+
     vex::task::sleep( 20 );
-    }
-    return(0);
+    Controller1.Screen.newLine();
+    Controller1.Screen.print(IMU.angle());
+  }
+  return(0);
 }
  
  
@@ -58,6 +66,10 @@ void usercontrol( void ) {
    if (Controller1.ButtonLeft.pressing()) {
      while(Controller1.ButtonLeft.pressing()) {}
      deploy();
+   }
+
+   if (Controller1.ButtonRight.pressing()) {
+     turnClockwiseIMU(90, 100);
    }
  
  
@@ -133,7 +145,7 @@ int main() {
      vex::task::sleep(100);//Sleep the task for a short amount of time to prevent wasted resources.
      double val = Selector.value(percentUnits::pct);
      double sectorSpan = 100 / 4;
-     Controller1.Screen.clearLine();
+     Controller1.Screen.newLine();
      if (val <= sectorSpan) {
        Controller1.Screen.print("Red 5 cube EPIC");
      } else if (val <= 2*sectorSpan) {
