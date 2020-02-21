@@ -100,8 +100,8 @@ void turnIMU(double deg) {
 }
 
 void turnIMUAbsolute(double deg) {
-  double maxSettleSpeed = 0.1;
-  double maxSettleError = 1;
+  double maxSettleSpeed = 2;
+  double maxSettleError = 2;
 
   double target = deg;
   while(target < 0) {
@@ -119,12 +119,14 @@ void turnIMUAbsolute(double deg) {
       error = target - IMU.heading() + 360;
     }
 
-    double P = 0.6 * error;
-    double D = 0.2 * getClockwiseTurnVel();
+    double P = 0.9 * error;
+    double D = 1.1 * getClockwiseTurnVel();
     
     double total = P - D;
     setLeftVel(total);
     setRightVel(-total);
+    Controller1.Screen.newLine();
+    Controller1.Screen.print(IMU.heading());
 
     if ((fabs(D) < maxSettleSpeed) && (fabs(error) < maxSettleError)) {
       holdExit = false;
