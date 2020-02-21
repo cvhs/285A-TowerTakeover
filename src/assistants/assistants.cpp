@@ -100,7 +100,7 @@ void turnIMU(double deg) {
 }
 
 void turnIMUAbsolute(double deg) {
-  double maxSettleSpeed = 5;
+  double maxSettleSpeed = 0.1;
   double maxSettleError = 1;
 
   double target = deg;
@@ -119,8 +119,8 @@ void turnIMUAbsolute(double deg) {
       error = target - IMU.heading() + 360;
     }
 
-    double P = 0.9 * error;
-    double D = 0.4 * getClockwiseTurnVel();
+    double P = 0.6 * error;
+    double D = 0.2 * getClockwiseTurnVel();
     
     double total = P - D;
     setLeftVel(total);

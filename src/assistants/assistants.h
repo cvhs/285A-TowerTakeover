@@ -10,6 +10,12 @@ void setIntakePct(double v);
  
 void intakeMove(double deg);
 
+double getLeftVel();
+ 
+double getRightVel();
+
+double getClockwiseTurnVel();
+
 void setLeftVel(double v);
 
 void setRightVel(double v);
