@@ -1,6 +1,6 @@
 #include "vex.h"
-#include "autons.h"
 #include "../assistants/assistants.h"
+#include "autons.h"
 
 void skills() {
   setIntakePct(100);

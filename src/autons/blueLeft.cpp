@@ -6,7 +6,7 @@ void blueLeft() {
   blue6cube();
 }
 
-void blue5Cube() {
+void blue5cube() {
   setIntakePct(100);
   vex::task::sleep(200);
   moveForward(1200, 23);

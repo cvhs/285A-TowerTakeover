@@ -34,7 +34,7 @@ int driveTask() {
  
 void usercontrol( void ) {
  
- //vex::task d( driveTask );
+ vex::task d( driveTask );
  // User control code here, inside the loop
  while (1) {
    
@@ -85,8 +85,8 @@ void usercontrol( void ) {
       CubeLift.setVelocity(100, percentUnits::pct);
       IntakeLift.setVelocity(100, percentUnits::pct);
       IntakeLift.rotateTo(-300, rotationUnits::deg);
-      CubeLift.rotateTo(370, rotationUnits::deg);
-      IntakeLift.rotateTo(-890, rotationUnits::deg);
+      CubeLift.rotateTo(350, rotationUnits::deg);
+      IntakeLift.rotateTo(-930, rotationUnits::deg);
    }
  
    if (Controller1.ButtonB.pressing()) {
@@ -139,8 +139,8 @@ int main() {
    while(1) {
      vex::task::sleep(100);//Sleep the task for a short amount of time to prevent wasted resources.
      double val = Selector.value(percentUnits::pct);
-     double sectorSpan = 100 / numAutos;
-     Controller1.Screen.newLine();
+     double sectorSpan = 100 / 7;
+     Controller1.Screen.clearLine();
      if (val <= sectorSpan) {
        Controller1.Screen.print("Skills");
      } else if (val <= 2*sectorSpan) {
