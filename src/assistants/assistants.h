@@ -5,6 +5,8 @@
 void liftUp();
 
 void deploy();
+
+void allDown();
  
 void setIntakePct(double v);
  

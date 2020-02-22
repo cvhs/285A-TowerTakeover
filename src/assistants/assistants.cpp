@@ -12,6 +12,13 @@ void deploy() {
   IntakeLift.rotateTo(0, rotationUnits::deg); 
 }
 
+void allDown() {
+  CubeLift.setVelocity(100, percentUnits::pct);
+  IntakeLift.setVelocity(100, percentUnits::pct);
+  CubeLift.startRotateTo(0, rotationUnits::deg);
+  IntakeLift.startRotateTo(0, rotationUnits::deg);
+}
+
 void stopAllMotors() {
   LF.setStopping(brakeType::brake);
   RF.setStopping(brakeType::brake);
@@ -148,10 +155,10 @@ void liftCubes() {
 void backOut() {
   IL.spin(directionType::fwd, -9, voltageUnits::volt);
   IR.spin(directionType::fwd, 9, voltageUnits::volt);
-  LF.spin(directionType::fwd, -12, voltageUnits::volt);
-  LB.spin(directionType::fwd, -12, voltageUnits::volt);
-  RF.spin(directionType::fwd, 12, voltageUnits::volt);
-  RB.spin(directionType::fwd, 12, voltageUnits::volt);
+  LF.spin(directionType::fwd, -8, voltageUnits::volt);
+  LB.spin(directionType::fwd, -8, voltageUnits::volt);
+  RF.spin(directionType::fwd, 8, voltageUnits::volt);
+  RB.spin(directionType::fwd, 8, voltageUnits::volt);
 }
 void basicDriveBackForth() {
   LF.spin(directionType::fwd, -70, percentUnits::pct);

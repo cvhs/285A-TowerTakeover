@@ -31,15 +31,19 @@ void blue6cube() {
   moveForward(-90, 30);
   turnClockwise(70, 30);
   moveForward(250, 20);
-  vex::task::sleep(200);
-  turnClockwise(-422, 20);
+  vex::task::sleep(400);
   setIntakePct(0);
+  turnClockwise(-422, 22);
+  setIntakePct(70);
   vex::task::sleep(300);
-  moveForward(950, 80);
-  intakeMove(-600);
+  moveForward(1000, 80);
+  setIntakePct(0);
+  intakeMove(-520);
   vex::task::sleep(300);
   liftCubes();
-  moveForward(50, 20);
+  moveForward(30, 15);
+  allDown();
   backOut();
-  vex::task::sleep(500);
+  vex::task::sleep(2000);
+  stopAllMotors();
 }

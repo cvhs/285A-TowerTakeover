@@ -3,8 +3,9 @@
 #include "../assistants/assistants.h"
 
 void redRight() {
-  red5cube();
+  
 }
+
 
 void red5cube() {
   setIntakePct(100);
@@ -25,5 +26,26 @@ void red5cube() {
 }
 
 void red6cube() {
-
+  setIntakePct(100);
+  moveForward(1200, 31);
+  vex::task::sleep(400);
+  moveForward(-90, 30);
+  turnClockwise(-70, 30);
+  moveForward(250, 20);
+  vex::task::sleep(400);
+  setIntakePct(0);
+  turnClockwise(430, 22);
+  setIntakePct(70);
+  vex::task::sleep(300);
+  moveForward(1000, 80);
+  setIntakePct(0);
+  intakeMove(-520);
+  vex::task::sleep(300);
+  liftCubes();
+  moveForward(30, 15);
+  allDown();
+  backOut();
+  vex::task::sleep(2000);
+  stopAllMotors();
 }
+
