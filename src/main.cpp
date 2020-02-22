@@ -1,10 +1,12 @@
 #include "vex.h"
 #include "assistants/assistants.h"
 #include "autons/autons.h"
+#include "screens/screens.h"
 using namespace vex;
 competition Competition;
  
 void pre_auton( void ) {
+  vexcodeInit();
   calibrateGyro();
 }
  
@@ -33,12 +35,10 @@ int driveTask() {
  
  
 void usercontrol( void ) {
- 
- vex::task d( driveTask );
- // User control code here, inside the loop
- while (1) {
+  startDriverTimer();
+  vex::task d( driveTask );
+  while (1) {
    
- 
    if (Controller1.ButtonR1.pressing()) {
      IL.spin(directionType::fwd, -12, voltageUnits::volt);
      IR.spin(directionType::fwd, 12, voltageUnits::volt);
@@ -129,6 +129,7 @@ void usercontrol( void ) {
 //
 int main() {
    //Set up callbacks for autonomous and driver control periods.
+   startScreens();
    Competition.autonomous( autonomous );
    Competition.drivercontrol( usercontrol );
   
@@ -137,25 +138,7 @@ int main() {
      
    //Prevent main from exiting with an infinite loop.                       
    while(1) {
-     vex::task::sleep(100);//Sleep the task for a short amount of time to prevent wasted resources.
-     double val = Selector.value(percentUnits::pct);
-     double sectorSpan = 100 / 7;
-     Controller1.Screen.clearLine();
-     if (val <= sectorSpan) {
-       Controller1.Screen.print("Skills");
-     } else if (val <= 2*sectorSpan) {
-       Controller1.Screen.print("Blue Right (BIG GOAL)");
-     } else if (val <= 3*sectorSpan) {
-       Controller1.Screen.print("Blue 5 Cube");
-     } else if  (val <= 4*sectorSpan) {
-       Controller1.Screen.print("Blue 6 Cube");
-     } else if  (val <= 5*sectorSpan) {
-       Controller1.Screen.print("Red Left (BIG GOAL)");
-     } else if  (val <= 6*sectorSpan) {
-       Controller1.Screen.print("Red 5 Cube");
-     } else if  (val <= 7*sectorSpan) {
-       Controller1.Screen.print("Red 6 Cube");
-     }
+     vex::task::sleep(150);
    }   
      
 }

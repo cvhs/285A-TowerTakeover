@@ -9,7 +9,7 @@ void liftUp() {
 void deploy() {
   IntakeLift.setVelocity(100, percentUnits::pct);
   IntakeLift.rotateTo(-900, rotationUnits::deg);
-  IntakeLift.rotateTo(0, rotationUnits::deg); 
+  IntakeLift.rotateTo(0, rotationUnits::deg);
 }
 
 void allDown() {
@@ -107,8 +107,8 @@ void turnIMU(double deg) {
 }
 
 void turnIMUAbsolute(double deg) {
-  double maxSettleSpeed = 2;
-  double maxSettleError = 2;
+  double maxSettleSpeed = 1;
+  double maxSettleError = 1;
 
   double target = deg;
   while(target < 0) {
@@ -126,16 +126,14 @@ void turnIMUAbsolute(double deg) {
       error = target - IMU.heading() + 360;
     }
 
-    double P = 0.9 * error;
-    double D = 0.35 * IMU.gyroRate(axisType::zaxis, velocityUnits::dps);
+    double P = 0.6 * error;
+    double D = 0.05 * IMU.gyroRate(axisType::zaxis, velocityUnits::dps);
     
     double total = P - D;
     setLeftVel(total);
     setRightVel(-total);
-    Controller1.Screen.newLine();
-    Controller1.Screen.print(IMU.heading());
 
-    if ((fabs(D) < maxSettleSpeed) && (fabs(error) < maxSettleError)) {
+    if ((fabs(IMU.gyroRate(axisType::zaxis, velocityUnits::dps)) < maxSettleSpeed) && (fabs(error) < maxSettleError)) {
       holdExit = false;
     }
 
@@ -180,7 +178,6 @@ void basicDriveBackForth() {
 void calibrateGyro() {
   IMU.calibrate();
   while(IMU.isCalibrating()) {
-    wait(10, timeUnits::sec);
-    Controller1.Screen.print("IMU DONE");
+    wait(100, timeUnits::msec);
   }
 }
