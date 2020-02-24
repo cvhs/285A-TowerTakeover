@@ -11,16 +11,17 @@ void red5cube() {
   setIntakePct(100);
   vex::task::sleep(200);
   moveForward(1200, 23);
-  vex::task::sleep(100);
+  vex::task::sleep(300);
+  setIntakePct(15);
   turnClockwise(390, 30);
   vex::task::sleep(100);
-  setIntakePct(0);
   moveForward(880, 50);
-  intakeMove(-500);
+  intakeMove(-600);
   vex::task::sleep(700);
   liftCubes();
-  moveForward(40, 20);
+  moveForward(20, 17);
   vex::task::sleep(200);
+  allDown();
   backOut();
   vex::task::sleep(500);
 }

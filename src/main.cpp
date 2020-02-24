@@ -63,9 +63,6 @@ void usercontrol( void ) {
      deploy();
    }
 
-   if (Controller1.ButtonRight.pressing()) {
-     turnIMU(90);
-   }
  
  
    // Macro To Intake  1048 784

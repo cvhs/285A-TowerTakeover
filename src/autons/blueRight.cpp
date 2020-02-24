@@ -9,6 +9,7 @@ void blueRight() {
   setIntakePct(10);
   turnClockwise(220, 20);
   setIntakePct(100);
+  CubeLift.resetRotation();
   vex::task::sleep(200);
   moveForward(600, 41);
   vex::task::sleep(200);
@@ -16,9 +17,10 @@ void blueRight() {
   vex::task::sleep(200);
   moveForward(290, 41);
   vex::task::sleep(200);
-  intakeMove(-750);
+  intakeMove(-450);
   vex::task::sleep(500);
   liftCubes();
+  CubeLift.stop();
   moveForward(50, 15);
   vex::task::sleep(200);
   allDown();

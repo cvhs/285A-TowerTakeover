@@ -20,6 +20,8 @@ double getClockwiseTurnVel();
 
 void setLeftVel(double v);
 
+void slamBack();
+
 void setRightVel(double v);
 
 void setVel(double v);

@@ -80,11 +80,11 @@ int driverTimer() {
     
     Controller1.Screen.setCursor(2, 0);
     Controller1.Screen.print("TIME: ");
-    Controller1.Screen.print(IMU.gyroRate(axisType::zaxis, velocityUnits::dps));
+    Controller1.Screen.print(drivtim);
 
     Controller1.Screen.setCursor(3, 0);
     Controller1.Screen.print("SKILLS: ");
-    Controller1.Screen.print(IMU.heading());
+    Controller1.Screen.print(skiltrim);
   }
   return(0);
 }
